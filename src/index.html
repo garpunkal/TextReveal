@@ -8,7 +8,18 @@
         content="Watch as each letter emerges from the shadows, unveiling a hidden message with every scroll! The magic of text reveal brings your words to life, one pixel at a time.">
     <title>Scroll Text Reveal</title>
     <link rel="stylesheet" href="styles/styles.css">
-
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family:
+                "Inter",
+                -apple-system,
+                sans-serif;
+            background-color: var(--bg-color);
+            color: var(--txt-color);
+        }
+    </style>
 </head>
 
 <body>
@@ -28,7 +39,7 @@
             </div>
         </section>
 
-        <p class="spacer">Keep scrolling for more examples</p>
+     <div class="spacer">Scrolling...</div>
 
         <section class="text-reveal-container" data-bg="#000000">
             <div class="container">
@@ -39,7 +50,7 @@
             </div>
         </section>
 
-        <p class="spacer">Keep Scrolling</p>
+         <div class="spacer">Scrolling...</div>
 
         <section class="text-reveal-container" data-bg="#ffffff">
             <div class="container">
@@ -50,7 +61,7 @@
             </div>
         </section>
 
-        <p class="spacer">More Scrolling</p>
+         <div class="spacer">Scrolling...</div>
 
         <section class="text-reveal-container" data-bg="#6CADAD">
             <div class="container">
@@ -60,7 +71,7 @@
             </div>
         </section>
 
-        <p class="spacer">Last Scrolling</p>
+       <div class="spacer">Scrolling...</div>
 
         <section class="text-reveal-container" data-bg="#cf7425">
             <div class="container">
@@ -72,7 +83,38 @@
             </div>
         </section>
 
-        <p class="spacer">The End</p>
+       
+       <div class="spacer">Scrolling...</div>
+            <section class="text-reveal-container" data-bg="#222">
+                <div class="container">
+                    <p class="text-reveal" style="font-size: 1.2rem;" data-revealed="#fff" data-unrevealed="#888" data-highlight="#FFD600">
+                        Small text reveal example: <span>Subtle</span> and compact for <span>captions</span> or footnotes.
+                    </p>
+                </div>
+            </section>
+
+            
+         <div class="spacer">Scrolling...</div>
+            <section class="text-reveal-container" data-bg="#2d3a4a">
+                <div class="container">
+                    <p class="text-reveal" style="font-size: 2rem;" data-revealed="#fff" data-unrevealed="#666" data-highlight="#E5B80B" data-dot>
+                        Medium text reveal example: Great for <span>body text</span> or feature <span>highlights</span>
+                    </p>
+                </div>
+            </section>
+            
+        <div class="spacer">Scrolling...</div>
+
+
+            <section class="text-reveal-container" data-bg="#1a1a1a">
+                <div class="container">
+                    <p class="text-reveal" style="font-size: 6rem;line-height: 7rem;" data-revealed="#fff" data-unrevealed="#444" data-highlight="#E5B80B">
+                        Extra-large text reveal example: Make a <span>bold</span> <span>statement</span>!
+                    </p>
+                </div>
+            </section>
+
+             <p class="spacer">The End</p>
     </main>
     <script type="module">
         import { TextReveal } from './scripts/TextReveal.js';

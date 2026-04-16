@@ -1,0 +1,75 @@
+:root {
+  --bg-color: #000000;
+  --reveal-active: #ffffff;
+  --reveal-inactive: #333333;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-color);
+  font-family: 'Inter', -apple-system, sans-serif;
+  color: #fff;
+}
+
+/* Beautiful modern font setup */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap');
+
+.spacer {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #555;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Scroll reveal container */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 10vh 20px;
+}
+
+.text-reveal {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0;
+  
+  /* Fallbacks initialized ahead of JS injection */
+  --line-height: 50.4px;
+  --fully-active-y: 0px;
+  --active-x: 0%;
+
+  /* Color must be transparent so gradients clip text strictly */
+  color: transparent;
+  
+  /* MULTI-LAYER HARD BACKGROUNDS (Driven securely via Javascript calculations) */
+  background-image: 
+    /* Layer A: The single animating line sweeping left to right */
+    linear-gradient(to right, 
+      var(--reveal-active) 0%, 
+      var(--reveal-active) var(--active-x), 
+      transparent var(--active-x)
+    ),
+    /* Layer B: The full block of lines above and below */
+    linear-gradient(to bottom, 
+      var(--reveal-active) 0%, 
+      var(--reveal-active) var(--fully-active-y), 
+      var(--reveal-inactive) var(--fully-active-y)
+    );
+    
+  /* The animating line is strictly locked to 1 line-height tall */
+  background-size: 100% var(--line-height), 100% 100%;
+  
+  /* The animating line drops down on the Y axis exactly as lines finish */
+  background-position: 0 var(--fully-active-y), 0 0;
+  background-repeat: no-repeat;
+  
+  /* Clip to the geometry of the text itself */
+  background-clip: text;
+  -webkit-background-clip: text;
+}

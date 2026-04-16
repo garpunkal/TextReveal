@@ -1,8 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap");
 
 :root {
-	--bg-color: #000000;
-	--txt-color: #ffffff;
+	--bg-color: #666666;
+	--txt-color: #efefef;
 	--reveal-active: #ffffff;
 	--reveal-inactive: #333333;
 }
@@ -23,7 +23,6 @@ body {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	color: #555;
 	font-weight: 700;
 	text-transform: uppercase;
 	letter-spacing: 0.1em;
@@ -53,9 +52,11 @@ body {
 	}
 }
 
+/* The background color will be set via a CSS variable, defaulting to #000 */
 .text-reveal-container {
-	background-color: #000;
+	background-color: var(--bg-color, #000);
 }
+
 
 .text-reveal {
 	font-size: 3rem;
@@ -67,13 +68,15 @@ body {
 	--line-height: 50.4px;
 	--fully-active-y: 0px;
 	--active-x: 0%;
+	--reveal-active: #ffffff;
+	--reveal-inactive: #333333;
 
 	/* Color must be transparent so gradients clip text strictly */
 	color: transparent;
 
 	/* MULTI-LAYER HARD BACKGROUNDS (Driven securely via Javascript calculations) */
 	background-image: 
-    /* Layer A: The single animating line sweeping left to right */
+		/* Layer A: The single animating line sweeping left to right */
 		linear-gradient(
 			to right,
 			var(--reveal-active) 0%,
@@ -82,11 +85,11 @@ body {
 		),
 		/* Layer B: The full block of lines above and below */
 		linear-gradient(
-				to bottom,
-				var(--reveal-active) 0%,
-				var(--reveal-active) var(--fully-active-y),
-				var(--reveal-inactive) var(--fully-active-y)
-			);
+			to bottom,
+			var(--reveal-active) 0%,
+			var(--reveal-active) var(--fully-active-y),
+			var(--reveal-inactive) var(--fully-active-y)
+		);
 
 	/* The animating line is strictly locked to 1 line-height tall */
 	background-size:

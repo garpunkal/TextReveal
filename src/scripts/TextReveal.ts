@@ -13,7 +13,22 @@ export class TextReveal {
   constructor(selector = '.text-reveal') {
     this.reveals = document.querySelectorAll<HTMLElement>(selector);
     this.observer = new ResizeObserver(this.handleResize.bind(this));
-    this.reveals.forEach(paragraph => this.observer.observe(paragraph));
+    this.reveals.forEach(paragraph => {
+      this.observer.observe(paragraph);
+
+      // Set CSS variables from data-attributes for text colors
+      const revealed = paragraph.getAttribute('data-revealed');
+      const unrevealed = paragraph.getAttribute('data-unrevealed');
+      if (revealed) paragraph.style.setProperty('--reveal-active', revealed);
+      if (unrevealed) paragraph.style.setProperty('--reveal-inactive', unrevealed);
+
+      // Set background color on the container if data-bg is present
+      const container = paragraph.closest('.text-reveal-container');
+      if (container) {
+        const bg = container.getAttribute('data-bg');
+        if (bg) (container as HTMLElement).style.setProperty('--bg-color', bg);
+      }
+    });
     window.addEventListener('scroll', this.calculateTargets.bind(this), { passive: true });
     this.calculateTargets();
     requestAnimationFrame(this.renderLoop.bind(this));

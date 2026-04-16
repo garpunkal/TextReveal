@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap");
 
 :root {
-	--bg-color: #999999;
+	--bg-color: #333333;
 	--txt-color: #efefef;
 	--reveal-active: #ffffff;
 	--reveal-inactive: #333333;
@@ -26,13 +26,12 @@ body {
 	font-weight: 700;
 	text-transform: uppercase;
 	letter-spacing: 0.1em;
+
+	&:first-child {
+		height: 100vh;
+	}
 }
 
-.spacer:first-child {
-	height: 100vh;
-}
-
-/* Scroll reveal container */
 .container {
 	max-width: 900px;
 	padding: 4vh 1.5rem;
@@ -60,70 +59,69 @@ body {
 .text-reveal-container {
 	background-color: var(--bg-color, #000);
 	padding: 4vh 0;
-}
 
-.text-reveal {
-	font-size: 3rem;
-	font-weight: 700;
-	line-height: 1.4;
-	margin: 0;
-	--line-height: 50.4px;
-	--fully-active-y: 0px;
-	--active-x: 0%;
-	--reveal-active: #ffffff;
-	--reveal-inactive: #333333;
-	color: transparent;
-	background-clip: text;
-	-webkit-background-clip: text;
-	background-image:
-		linear-gradient(
-			to right,
-			var(--reveal-active) 0%,
-			var(--reveal-active) var(--active-x),
-			transparent var(--active-x)
-		),
-		linear-gradient(
-			to bottom,
-			var(--reveal-active) 0%,
-			var(--reveal-active) var(--fully-active-y),
-			var(--reveal-inactive) var(--fully-active-y)
-		);
-	background-size:
-		100% var(--line-height),
-		100% 100%;
-	background-position:
-		0 var(--fully-active-y),
-		0 0;
-	background-repeat: no-repeat;
-}
+	& .text-reveal {
+		font-size: 3rem;
+		font-weight: 700;
+		line-height: 1.4;
+		margin: 0;
+		--line-height: 50.4px;
+		--fully-active-y: 0px;
+		--active-x: 0%;
+		--reveal-active: #ffffff;
+		--reveal-inactive: #333333;
+		color: transparent;
+		background-clip: text;
+		-webkit-background-clip: text;
+		background-image:
+			linear-gradient(
+				to right,
+				var(--reveal-active) 0%,
+				var(--reveal-active) var(--active-x),
+				transparent var(--active-x)
+			),
+			linear-gradient(
+				to bottom,
+				var(--reveal-active) 0%,
+				var(--reveal-active) var(--fully-active-y),
+				var(--reveal-inactive) var(--fully-active-y)
+			);
+		background-size:
+			100% var(--line-height),
+			100% 100%;
+		background-position:
+			0 var(--fully-active-y),
+			0 0;
+		background-repeat: no-repeat;
 
-.highlight-reveal {
-	--highlight-reveal: #ffd600;
-	--highlight-unrevealed: #ffb300;
-	display: inline-block;
-	background-image: linear-gradient(
-		to right,
-		var(--highlight-reveal) 0%,
-		var(--highlight-reveal) var(--active-x),
-		var(--highlight-unrevealed) var(--active-x)
-	);
-	background-size: 100% 100%;
-	background-repeat: no-repeat;
-	-webkit-background-clip: text;
-	background-clip: text;
-	-webkit-text-fill-color: transparent;
-	text-fill-color: transparent;
-	position: relative;
-	z-index: 2;
-}
+		& .highlight-reveal {
+			--highlight-reveal: #ffd600;
+			display: inline-block;
+			background-image: linear-gradient(
+				to right,
+				var(--highlight-reveal) 0%,
+				var(--highlight-reveal) var(--active-x),
+				var(--reveal-inactive) var(--active-x)
+			);
+			background-size: 100% 100%;
+			background-repeat: no-repeat;
+			-webkit-background-clip: text;
+			background-clip: text;
+			-webkit-text-fill-color: transparent;
+			text-fill-color: transparent;
+			position: relative;
+			z-index: 2;
+		}
 
-.text-reveal[data-dot]::after {
-	content: "";
-	display: inline-block;
-	width: 5px;
-	height: 5px;
-	background-color: #e5b80b;
-	margin-top: 10px;
-	margin-bottom: 0px;
-	margin-left: -6px;
+		&.text-reveal[data-dot]::after {
+			content: "";
+			display: inline-block;
+			width: 5px;
+			height: 5px;
+			background-color: #e5b80b;
+			margin-top: 10px;
+			margin-bottom: 0px;
+			margin-left: -6px;
+		}
+	}
 }

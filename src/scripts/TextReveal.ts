@@ -14,6 +14,7 @@ export class TextReveal {
     this.reveals = document.querySelectorAll<HTMLElement>(selector);
     this.observer = new ResizeObserver(this.handleResize.bind(this));
     this.reveals.forEach(paragraph => {
+      paragraph.style.position = 'relative';
       this.observer.observe(paragraph);
 
       // Set CSS variables from data-attributes for text colors
@@ -23,14 +24,14 @@ export class TextReveal {
       if (unrevealed) paragraph.style.setProperty('--reveal-inactive', unrevealed);
 
       const highlightReveal = paragraph.getAttribute('data-highlight');
-      if (highlightReveal) paragraph.style.setProperty('--highlight', highlightReveal);
+      if (highlightReveal) paragraph.style.setProperty('--highlight-reveal', highlightReveal);
 
       // Automatically add highlight class to all <span> tags inside .text-reveal
       const spans = paragraph.querySelectorAll('span');
       spans.forEach(span => {
-        span.classList.add('highlight');
+        span.classList.add('highlight-reveal');
         // Always propagate highlight color variables from parent to span
-        span.style.setProperty('--highlight', highlightReveal || '#ffd600');
+        span.style.setProperty('--highlight-reveal', highlightReveal || '#ffd600');
       });
 
       // Set background color on the container if data-bg is present    
@@ -48,7 +49,6 @@ export class TextReveal {
   private handleResize(entries: ResizeObserverEntry[]) {
     entries.forEach(entry => {
       const el = entry.target as HTMLElement;
-      if (el.children.length > 0) el.innerHTML = el.textContent || '';
       const style = window.getComputedStyle(el);
       let lh = parseFloat(style.lineHeight);
       if (isNaN(lh)) lh = parseFloat(style.fontSize) * 1.4;
@@ -92,10 +92,27 @@ export class TextReveal {
       paragraph.style.setProperty('--fully-active-y', `${fullyActiveY}px`);
       paragraph.style.setProperty('--active-x', `${activeX}%`);
 
-      // Synchronize highlight spans and their dots with the same reveal progress
-      const highlights = paragraph.querySelectorAll<HTMLSpanElement>(".highlight");
+      // Synchronize highlight spans and their dots with the precise reveal progress
+      const highlights = paragraph.querySelectorAll<HTMLSpanElement>(".highlight-reveal");
+      const pWidth = paragraph.clientWidth;
+      const currentStopPx = (activeX / 100) * pWidth;
+
       highlights.forEach(span => {
-        span.style.setProperty('--active-x', `${activeX}%`);
+        const spanLine = Math.floor((span.offsetTop + span.offsetHeight / 2) / data.lh);
+        let spanActiveX = 0;
+        
+        if (currentLine > spanLine) {
+            spanActiveX = 100;
+        } else if (currentLine < spanLine) {
+            spanActiveX = 0;
+        } else {
+            const offsetLeft = span.offsetLeft;
+            const spanWidth = span.offsetWidth;
+            spanActiveX = ((currentStopPx - offsetLeft) / spanWidth) * 100;
+            spanActiveX = Math.max(0, Math.min(100, spanActiveX));
+        }
+
+        span.style.setProperty('--active-x', `${spanActiveX}%`);
       });
     });
     requestAnimationFrame(this.renderLoop.bind(this));

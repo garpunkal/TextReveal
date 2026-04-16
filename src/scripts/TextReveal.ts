@@ -3,6 +3,7 @@ export interface RevealData {
   lines: number;
   targetProgress?: number;
   currentProgress?: number;
+  dotOffsetLeft?: number;
 }
 
 export class TextReveal {
@@ -54,10 +55,24 @@ export class TextReveal {
       if (isNaN(lh)) lh = parseFloat(style.fontSize) * 1.4;
       const H = el.offsetHeight;
       const lines = Math.max(1, Math.round(H / lh));
-      this.revealData.set(el, { lh, lines });
+      const revealEntry: RevealData = { lh, lines };
+      if (el.hasAttribute('data-dot')) {
+        revealEntry.dotOffsetLeft = this.measureDotOffset(el);
+      }
+      this.revealData.set(el, revealEntry);
       el.style.setProperty('--line-height', `${lh}px`);
     });
     this.calculateTargets();
+  }
+
+  private measureDotOffset(el: HTMLElement): number {
+    const range = document.createRange();
+    range.selectNodeContents(el);
+    const rects = range.getClientRects();
+    if (rects.length === 0) return el.clientWidth;
+    const lastRect = rects[rects.length - 1];
+    const pRect = el.getBoundingClientRect();
+    return lastRect.right - pRect.left;
   }
 
   private calculateTargets() {
@@ -114,6 +129,21 @@ export class TextReveal {
 
         span.style.setProperty('--active-x', `${spanActiveX}%`);
       });
+
+      // Handle dot reveal — set --dot-active-x on the paragraph so ::after inherits it
+      if (paragraph.hasAttribute('data-dot')) {
+        const lastLine = data.lines - 1;
+        let dotActiveX = 0;
+        if (currentLine > lastLine) {
+          dotActiveX = 100;
+        } else if (currentLine === lastLine) {
+          const dotOffsetLeft = data.dotOffsetLeft ?? pWidth;
+          const dotWidth = 5;
+          dotActiveX = ((currentStopPx - dotOffsetLeft) / dotWidth) * 100;
+          dotActiveX = Math.max(0, Math.min(100, dotActiveX));
+        }
+        paragraph.style.setProperty('--dot-active-x', `${dotActiveX}%`);
+      }
     });
     requestAnimationFrame(this.renderLoop.bind(this));
   }

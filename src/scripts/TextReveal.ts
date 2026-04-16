@@ -21,17 +21,24 @@ export class TextReveal {
       const unrevealed = paragraph.getAttribute('data-unrevealed');
       if (revealed) paragraph.style.setProperty('--reveal-active', revealed);
       if (unrevealed) paragraph.style.setProperty('--reveal-inactive', unrevealed);
-      const highlightReveal = paragraph.getAttribute('data-highlight-reveal');
-      const highlightUnrevealed = paragraph.getAttribute('data-highlight-unrevealed');
-      if (highlightReveal) paragraph.style.setProperty('--highlight-reveal', highlightReveal);
-      if (highlightUnrevealed) paragraph.style.setProperty('--highlight-unrevealed', highlightUnrevealed);
-    
+
+      const highlightReveal = paragraph.getAttribute('data-highlight');
+      if (highlightReveal) paragraph.style.setProperty('--highlight', highlightReveal);
+
+      // Automatically add highlight class to all <span> tags inside .text-reveal
+      const spans = paragraph.querySelectorAll('span');
+      spans.forEach(span => {
+        span.classList.add('highlight');
+        // Always propagate highlight color variables from parent to span
+        span.style.setProperty('--highlight', highlightReveal || '#ffd600');
+      });
+
       // Set background color on the container if data-bg is present    
       const container = paragraph.closest('.text-reveal-container');
       if (container) {
         const bg = container.getAttribute('data-bg');
         if (bg) (container as HTMLElement).style.setProperty('--bg-color', bg);
-      }     
+      }
     });
     window.addEventListener('scroll', this.calculateTargets.bind(this), { passive: true });
     this.calculateTargets();
@@ -62,7 +69,10 @@ export class TextReveal {
       const totalDistance = windowHeight + rect.height;
       const scrolled = windowHeight - rect.top;
       let progress = scrolled / totalDistance;
-      progress = (progress - 0.2) / 0.6;
+      progress = (progress - 0.1) / 0.4;
+      //The - 0.1 means the reveal starts when the element is 10% into the scroll.
+      //The / 0.4 means the reveal completes after 40% of the scroll.
+      
       progress = Math.max(0, Math.min(1, progress));
       data.targetProgress = progress;
       if (data.currentProgress === undefined) data.currentProgress = progress;
@@ -83,7 +93,7 @@ export class TextReveal {
       paragraph.style.setProperty('--active-x', `${activeX}%`);
 
       // Synchronize highlight spans and their dots with the same reveal progress
-      const highlights = paragraph.querySelectorAll<HTMLSpanElement>(".highlight-reveal");
+      const highlights = paragraph.querySelectorAll<HTMLSpanElement>(".highlight");
       highlights.forEach(span => {
         span.style.setProperty('--active-x', `${activeX}%`);
       });

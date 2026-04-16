@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scroll Text Reveal</title>
-    <link rel="stylesheet" href="styles.css">
+  <script type="module" crossorigin src="/TextReveal/textreveal.min.js"></script>
+  <link rel="stylesheet" crossorigin href="/TextReveal/textreveal.min.css">
 </head>
+
 <body>
 
     <p class="spacer">Scroll Down</p>
@@ -15,20 +18,23 @@
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi volutpat in lorem tincidunt luctus. In hac
             habitasse platea dictumst. Sed arcu nisl, rutrum at lectus condimentum, pharetra condimentum turpis. Mauris
             cursus fringilla nibh pretium feugiat. Donec commodo neque vitae convallis gravida. In nibh leo, maximus eu
-            ultrices consectetur. This handles multiple lines beautifully as you scroll through the container, providing a smooth and engaging color transition from dark to light.
+            ultrices consectetur. This handles multiple lines beautifully as you scroll through the container, providing
+            a smooth and engaging color transition from dark to light.
         </p>
     </div>
 
     <p class="spacer">Keep Scrolling</p>
-    
+
     <div class="container">
         <p class="text-reveal">
-            With modern CSS scroll-driven animations, we don't even need JavaScript anymore to create deeply engaging scrolling experiences. By binding the background linear gradient to the view timeline, the text naturally reveals its true color as it flows into the active viewport bounds.
+            With modern CSS scroll-driven animations, we don't even need JavaScript anymore to create deeply engaging
+            scrolling experiences. By binding the background linear gradient to the view timeline, the text naturally
+            reveals its true color as it flows into the active viewport bounds.
         </p>
     </div>
 
     <p class="spacer">The End</p>
 
-    <script src="content.js"></script>
 </body>
+
 </html>

@@ -74,9 +74,26 @@
 
     <p class="spacer">The End</p>
 
+    <button id="scrollToTopBtn" style="position:fixed;bottom:32px;right:32px;padding:12px 20px;font-size:1rem;border:none;border-radius:6px;background:#32CD32;color:#fff;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.15);z-index:1000;">Scroll to Top</button>
+
     <script type="module">
         import { TextReveal } from './scripts/TextReveal.js';
         document.addEventListener('DOMContentLoaded', () => { new TextReveal(); });
+        // Scroll to Top button logic
+        const scrollBtn = document.getElementById('scrollToTopBtn');
+        scrollBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        // Show button only after scrolling down a bit
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 200) {
+                scrollBtn.style.display = 'block';
+            } else {
+                scrollBtn.style.display = 'none';
+            }
+        });
+        // Hide initially
+        scrollBtn.style.display = 'none';
     </script>
 </body>
 

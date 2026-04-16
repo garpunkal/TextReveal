@@ -1,75 +1,139 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap");
 
 :root {
-  --bg-color: #000000;
-  --reveal-active: #ffffff;
-  --reveal-inactive: #333333;
+	--bg-color: #333333;
+	--txt-color: #efefef;
+	--reveal-active: #ffffff;
+	--reveal-inactive: #333333;
 }
 
 body {
-  margin: 0;
-  padding: 0;
-  background-color: var(--bg-color);
-  font-family: 'Inter', -apple-system, sans-serif;
-  color: #fff;
+	margin: 0;
+	padding: 0;
+	font-family:
+		"Inter",
+		-apple-system,
+		sans-serif;
+	background-color: var(--bg-color);
+	color: var(--txt-color);
 }
 
 .spacer {
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #555;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-}
+	height: 30vh;
+	display: flex;
+	flex-direction:column;
+	align-items: center;
+	justify-content: center;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	line-height:0.1em;
 
-/* Scroll reveal container */
+	h1 {
+	
+		display: block;
+	}
+
+	&:first-child {
+		height: 100vh;
+	}
+}
 
 .container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 10vh 20px;
+	max-width: 900px;
+	padding: 4vh 1.5rem;
+	box-sizing: border-box;
+	margin: 0 auto;
 }
 
-.text-reveal {
-  font-size: 3rem;
-  font-weight: 700;
-  line-height: 1.4;
-  margin: 0;
-  
-  /* Fallbacks initialized ahead of JS injection */
-  --line-height: 50.4px;
-  --fully-active-y: 0px;
-  --active-x: 0%;
+@media (max-width: 900px) {
+	.container {
+		max-width: 100vw;
+		padding: 3vh 1rem;
+	}
+}
 
-  /* Color must be transparent so gradients clip text strictly */
-  color: transparent;
-  
-  /* MULTI-LAYER HARD BACKGROUNDS (Driven securely via Javascript calculations) */
-  background-image: 
-    /* Layer A: The single animating line sweeping left to right */
-    linear-gradient(to right, 
-      var(--reveal-active) 0%, 
-      var(--reveal-active) var(--active-x), 
-      transparent var(--active-x)
-    ),
-    /* Layer B: The full block of lines above and below */
-    linear-gradient(to bottom, 
-      var(--reveal-active) 0%, 
-      var(--reveal-active) var(--fully-active-y), 
-      var(--reveal-inactive) var(--fully-active-y)
-    );
-    
-  /* The animating line is strictly locked to 1 line-height tall */
-  background-size: 100% var(--line-height), 100% 100%;
-  
-  /* The animating line drops down on the Y axis exactly as lines finish */
-  background-position: 0 var(--fully-active-y), 0 0;
-  background-repeat: no-repeat;
-  
-  /* Clip to the geometry of the text itself */
-  background-clip: text;
-  -webkit-background-clip: text;
+@media (max-width: 600px) {
+	.container {
+		padding: 2vh 0.5rem;
+	}
+
+	.container .text-reveal {
+		font-size: 2rem;
+	}
+}
+
+.text-reveal-container {
+	background-color: var(--bg-color, #000);
+	padding: 4vh 0;
+
+	& .text-reveal {
+		font-size: 3rem;
+		font-weight: 700;
+		line-height: 1.4;
+		margin: 0;
+		--line-height: 50.4px;
+		--fully-active-y: 0px;
+		--active-x: 0%;
+		--reveal-active: #ffffff;
+		--reveal-inactive: #333333;
+		color: transparent;
+		background-clip: text;
+		-webkit-background-clip: text;
+		background-image:
+			linear-gradient(
+				to right,
+				var(--reveal-active) 0%,
+				var(--reveal-active) var(--active-x),
+				transparent var(--active-x)
+			),
+			linear-gradient(
+				to bottom,
+				var(--reveal-active) 0%,
+				var(--reveal-active) var(--fully-active-y),
+				var(--reveal-inactive) var(--fully-active-y)
+			);
+		background-size:
+			100% var(--line-height),
+			100% 100%;
+		background-position:
+			0 var(--fully-active-y),
+			0 0;
+		background-repeat: no-repeat;
+
+		& .highlight-reveal {
+			--highlight-reveal: #ffd600;
+			display: inline-block;
+			background-image: linear-gradient(
+				to right,
+				var(--highlight-reveal) 0%,
+				var(--highlight-reveal) var(--active-x),
+				var(--reveal-inactive) var(--active-x)
+			);
+			background-size: 100% 100%;
+			background-repeat: no-repeat;
+			-webkit-background-clip: text;
+			background-clip: text;
+			-webkit-text-fill-color: transparent;
+			text-fill-color: transparent;
+			position: relative;
+			z-index: 2;
+		}
+
+		&.text-reveal[data-dot]::after {
+			content: "";
+			display: inline-block;
+			width: 5px;
+			height: 5px;
+			background-image: linear-gradient(
+				to right,
+				var(--highlight-reveal, #ffd600) 0%,
+				var(--highlight-reveal, #ffd600) var(--dot-active-x, 0%),
+				var(--reveal-inactive) var(--dot-active-x, 0%)
+			);
+			margin-top: 10px;
+			margin-bottom: 0px;
+			margin-left: -6px;
+		}
+	}
 }

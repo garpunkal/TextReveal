@@ -24,9 +24,13 @@ document.addEventListener("DOMContentLoaded", () => {
         updateScrollProgress();
     });
 
-    const updateScrollProgress = () => {
+    // Decouple scroll position from the animation to add smooth sluggish easing
+    let targetProgress = 0;
+    let currentProgress = 0;
+    
+    // Calculate the target for each paragraph
+    const calculateTargets = () => {
         const windowHeight = window.innerHeight;
-        
         reveals.forEach(paragraph => {
             const data = revealData.get(paragraph);
             if (!data) return;
@@ -41,13 +45,23 @@ document.addEventListener("DOMContentLoaded", () => {
             progress = (progress - 0.2) / 0.6;
             progress = Math.max(0, Math.min(1, progress));
             
-            // Apply Easing In/Out (Sine) to make the motion feel more organic
-            // It will start revealing slowly, speed up in the middle, and slow down to finish
-            const easeInOutSine = (t) => -(Math.cos(Math.PI * t) - 1) / 2;
-            const easedProgress = easeInOutSine(progress);
+            // Store the raw target to lerp towards
+            data.targetProgress = progress;
+            if (data.currentProgress === undefined) data.currentProgress = progress;
+        });
+    };
+
+    // The Render Loop that creates the "Over Ease" smoothness
+    const renderLoop = () => {
+        reveals.forEach(paragraph => {
+            const data = revealData.get(paragraph);
+            if (!data || data.targetProgress === undefined) return;
             
-            // We calculate the exact grid masks in JS to ensure absolute cross-browser compatibility
-            const scaledProgress = easedProgress * data.lines;
+            // Lerp (Linear Interpolation) creates the buttery smooth "Ease" effect
+            // A smaller multiplier means a heavier/slower ease (0.05 is an "over ease")
+            data.currentProgress += (data.targetProgress - data.currentProgress) * 0.08;
+            
+            const scaledProgress = data.currentProgress * data.lines;
             const currentLine = Math.floor(scaledProgress);
             const fraction = scaledProgress - currentLine;
             
@@ -57,8 +71,14 @@ document.addEventListener("DOMContentLoaded", () => {
             paragraph.style.setProperty('--fully-active-y', `${fullyActiveY}px`);
             paragraph.style.setProperty('--active-x', `${activeX}%`);
         });
+        
+        requestAnimationFrame(renderLoop);
     };
 
     reveals.forEach(paragraph => observer.observe(paragraph));
-    window.addEventListener('scroll', updateScrollProgress, { passive: true });
+    window.addEventListener('scroll', calculateTargets, { passive: true });
+    
+    // Kick off
+    calculateTargets();
+    requestAnimationFrame(renderLoop);
 });

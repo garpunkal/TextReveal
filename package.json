@@ -1,0 +1,11 @@
+{
+  "name": "text-reveal",
+  "version": "1.0.0",
+  "description": "Scroll Text Reveal static site",
+  "scripts": {
+    "deploy": "npx gh-pages -d ."
+  },
+  "devDependencies": {
+    "gh-pages": "^6.3.0"
+  }
+}

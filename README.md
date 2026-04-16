@@ -2,17 +2,21 @@ Text Reveal
 
 ## GitHub Pages Deployment
 
-This project can be deployed to GitHub Pages automatically using GitHub Actions.
+This project can be deployed to GitHub Pages using an npm script.
 
-### How to Enable
+### How to Deploy
 
-1. Push your code to the `main` or `master` branch on GitHub.
-2. Go to your repository's **Settings > Pages**.
-3. Set the source to **GitHub Actions**.
-4. After a successful push, your site will be available at:
+1. Make sure you have pushed your latest changes to GitHub.
+2. Run the following command:
+
+   npm run deploy
+
+3. Go to your repository's **Settings > Pages**.
+4. Set the source to the `gh-pages` branch.
+5. Your site will be available at:
    `https://<your-username>.github.io/<your-repo>/`
 
-### Workflow File
-The deployment workflow is defined in `.github/workflows/gh-pages.yml`.
+### npm Script
+The deployment script uses the [gh-pages](https://www.npmjs.com/package/gh-pages) package to publish the site.
 
 No further configuration is needed for a static site.

@@ -21,13 +21,17 @@ export class TextReveal {
       const unrevealed = paragraph.getAttribute('data-unrevealed');
       if (revealed) paragraph.style.setProperty('--reveal-active', revealed);
       if (unrevealed) paragraph.style.setProperty('--reveal-inactive', unrevealed);
-
-      // Set background color on the container if data-bg is present
+      const highlightReveal = paragraph.getAttribute('data-highlight-reveal');
+      const highlightUnrevealed = paragraph.getAttribute('data-highlight-unrevealed');
+      if (highlightReveal) paragraph.style.setProperty('--highlight-reveal', highlightReveal);
+      if (highlightUnrevealed) paragraph.style.setProperty('--highlight-unrevealed', highlightUnrevealed);
+    
+      // Set background color on the container if data-bg is present    
       const container = paragraph.closest('.text-reveal-container');
       if (container) {
         const bg = container.getAttribute('data-bg');
         if (bg) (container as HTMLElement).style.setProperty('--bg-color', bg);
-      }
+      }     
     });
     window.addEventListener('scroll', this.calculateTargets.bind(this), { passive: true });
     this.calculateTargets();
@@ -69,7 +73,7 @@ export class TextReveal {
     this.reveals.forEach(paragraph => {
       const data = this.revealData.get(paragraph);
       if (!data || data.targetProgress === undefined) return;
-      data.currentProgress! += (data.targetProgress! - data.currentProgress!) * 0.08;
+      data.currentProgress! += (data.targetProgress! - data.currentProgress!) * 0.12;
       const scaledProgress = data.currentProgress! * data.lines;
       const currentLine = Math.floor(scaledProgress);
       const fraction = scaledProgress - currentLine;
@@ -77,6 +81,12 @@ export class TextReveal {
       const activeX = fraction * 100;
       paragraph.style.setProperty('--fully-active-y', `${fullyActiveY}px`);
       paragraph.style.setProperty('--active-x', `${activeX}%`);
+
+      // Synchronize highlight spans and their dots with the same reveal progress
+      const highlights = paragraph.querySelectorAll<HTMLSpanElement>(".highlight-reveal");
+      highlights.forEach(span => {
+        span.style.setProperty('--active-x', `${activeX}%`);
+      });
     });
     requestAnimationFrame(this.renderLoop.bind(this));
   }

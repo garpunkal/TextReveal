@@ -19,7 +19,7 @@ body {
 }
 
 .spacer {
-	height: 100vh;
+	height: 60vh;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -55,8 +55,8 @@ body {
 /* The background color will be set via a CSS variable, defaulting to #000 */
 .text-reveal-container {
 	background-color: var(--bg-color, #000);
+	padding: 4vh 0;
 }
-
 
 .text-reveal {
 	font-size: 3rem;
@@ -85,11 +85,11 @@ body {
 		),
 		/* Layer B: The full block of lines above and below */
 		linear-gradient(
-			to bottom,
-			var(--reveal-active) 0%,
-			var(--reveal-active) var(--fully-active-y),
-			var(--reveal-inactive) var(--fully-active-y)
-		);
+				to bottom,
+				var(--reveal-active) 0%,
+				var(--reveal-active) var(--fully-active-y),
+				var(--reveal-inactive) var(--fully-active-y)
+			);
 
 	/* The animating line is strictly locked to 1 line-height tall */
 	background-size:
@@ -105,4 +105,37 @@ body {
 	/* Clip to the geometry of the text itself */
 	background-clip: text;
 	-webkit-background-clip: text;
+}
+
+.highlight-reveal {
+	/* Fallbacks for highlight colors */
+	--highlight-reveal: #ffd600;
+	--highlight-unrevealed: #ffb300;
+	background-image: linear-gradient(
+		to right,
+		var(--highlight-reveal) 0%,
+		var(--highlight-reveal) var(--active-x),
+		var(--highlight-unrevealed) var(--active-x)
+	);
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	background-clip: text;
+	-webkit-background-clip: text;
+	color: transparent !important;
+	position: relative;
+	z-index: 2;
+	/* Unset parent text-fill if inherited */
+	-webkit-text-fill-color: initial !important;
+	text-fill-color: initial !important;
+}
+
+.text-reveal[data-dot]::after {
+	content: "";
+	display: inline-block;
+	width: 5px;
+	height: 5px;
+	background-color: #e5b80b;
+	margin-top: 10px;
+	margin-bottom: 0px;
+	margin-left: -6px;
 }

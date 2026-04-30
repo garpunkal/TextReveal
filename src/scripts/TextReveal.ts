@@ -71,11 +71,18 @@ export class TextReveal {
       const rect = paragraph.getBoundingClientRect();
       const totalDistance = windowHeight + rect.height;
       const scrolled = windowHeight - rect.top;
+
+      // Read data attributes for start and fill
+      const startAttr = paragraph.getAttribute('data-start');
+      const fillAttr = paragraph.getAttribute('data-fill');
+      const start = startAttr !== null ? parseFloat(startAttr) : 0.1;
+      const fill = fillAttr !== null ? parseFloat(fillAttr) : 0.4;
+
       let progress = scrolled / totalDistance;
-      progress = (progress - 0.1) / 0.4;
-      //The - 0.1 means the reveal starts when the element is 10% into the scroll.
-      //The / 0.4 means the reveal completes after 40% of the scroll.
-      
+      progress = (progress - start) / fill;
+      // The - start means the reveal starts when the element is start% into the scroll.
+      // The / fill means the reveal completes after fill% of the scroll.
+
       progress = Math.max(0, Math.min(1, progress));
       data.targetProgress = progress;
       if (data.currentProgress === undefined) data.currentProgress = progress;

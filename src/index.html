@@ -33,9 +33,9 @@
             <p>Scroll down</p>
         </div>
 
-        <section class="text-reveal-container" data-bg="#1C2431">
+        <section class="text-reveal-container" data-bg="#EEF3F9">
             <div class="container">
-                <p class="text-reveal" data-revealed="#ffffff" data-unrevealed="#666666" data-highlight="#E5B80B"
+                <p class="text-reveal" data-revealed="#990000" data-unrevealed="#009900" data-highlight="#000099" data-highlight-unrevealed="#009900"
                     data-dot>Watch as each letter emerges from the shadows, unveiling a <span>hidden</span> message with
                     every scroll! The magic of text reveal brings your words to life, one <span>pixel</span> at a time
                 </p>
@@ -60,6 +60,19 @@
             <div class="container">
                 <p class="text-reveal" data-revealed="#fff" data-unrevealed="#888" data-highlight="#FFD600" data-fill="0.8">
                     <b>Custom Fill (80%)</b>: This text reveal fills up <span>slowly</span>, taking 80% of the scroll window to complete.
+                </p>
+            </div>
+        </section>
+
+        <div class="spacer">Scrolling...</div>
+
+        <!-- Example: Start animation at normal start, but begin 25% filled and finish by 75% scroll -->
+        <section class="text-reveal-container" data-bg="#263041">
+            <div class="container">
+                <p class="text-reveal" data-revealed="#fff" data-unrevealed="#888" data-highlight="#FFD600"
+                    data-fill-start="0.25" data-fill="0.5">
+                    <b>Fill Starts at 25%</b>: At animation start this is already <span>25%</span> filled,
+                    and it reaches full fill after <span>50%</span> more scroll progress.
                 </p>
             </div>
         </section>
@@ -142,6 +155,38 @@
             </div>
         </section>
 
+        <div class="spacer">Scrolling...</div>
+        <section class="text-reveal-container" data-bg="#1e2b36">
+            <div class="container">
+                <p class="text-reveal" data-single-line data-single-line-min="1" data-single-line-max="2.5rem"
+                    data-revealed="#fff" data-unrevealed="#6f8597"
+                    data-highlight="#6ee7ff" data-fill-start="0" data-fill="0.75">
+                    Single line example: This reveal stays on one line and <span>scales</span> with its container width.
+                </p>
+            </div>
+        </section>
+        
+        <div class="spacer">Scrolling...</div>
+        <section class="text-reveal-container" data-bg="#1e2b36">
+            <div class="container">
+                <p class="text-reveal" data-single-line data-single-line-min="1rem" data-single-line-max="3rem"
+                    data-revealed="#fff" data-unrevealed="#6f8597"
+                    data-highlight="#6ee7ff" data-fill-start="0.1" data-fill="0.65">
+                    Single line example: This stays on one line and <span>scales</span>.
+                </p>
+            </div>
+        </section>
+        
+        <div class="spacer">Scrolling...</div>
+        <section class="text-reveal-container" data-bg="#1e2b36">
+            <div class="container">
+                <p class="text-reveal" data-single-line data-single-line-min="0.5rem" data-single-line-max="19rem"
+                    data-revealed="#fff" data-unrevealed="#6f8597"
+                    data-highlight="#6ee7ff" data-fill-start="0.1" data-fill="0.65">
+                    Single <span>Line</span>.
+                </p>
+            </div>
+        </section>
 
         <p class="spacer">The End</p>
     </main>

@@ -1,4 +1,3 @@
-
 # Text Reveal
 
 
@@ -17,7 +16,7 @@ To add a text reveal effect to your page, use the following HTML structure:
 ```html
 <section class="text-reveal-container" data-bg="#000000">
    <div class="container">
-      <p class="text-reveal" data-revealed="#ffffff" data-unrevealed="#333333" data-highlight="#32CD32" data-dot>
+      <p class="text-reveal" data-revealed="#ffffff" data-unrevealed="#333333" data-highlight="#32CD32" data-highlight-unrevealed="#333333" data-dot>
          Like a curtain rising on a stage, the text is <span>gradually illuminated</span> as you scroll,
          transforming plain
          letters into a <span>dazzling display of color</span> and motion
@@ -32,9 +31,11 @@ To add a text reveal effect to your page, use the following HTML structure:
 - `data-revealed`: Color of the revealed text.
 - `data-unrevealed`: Color of the unrevealed text.
 - `data-highlight`: Color for highlighted text (inside `<span>` tags).
+- `data-highlight-unrevealed`: (Optional) Color for the unrevealed part of highlighted text and dot. Defaults to `data-unrevealed`.
 - `data-dot`: (Optional) Enables the animated dot effect.
-- `data-start`: (Optional) Percentage (0–1) of scroll before reveal starts. Default is `0.1` (10%).
+- `data-start`: (Optional) Percentage (0–1) of scroll before reveal starts (controls the animation start percentage). Default is `0.1` (10%).
 - `data-fill`: (Optional) Percentage (0–1) of scroll over which the reveal completes. Default is `0.4` (40%).
+- `data-fill-start`: (Optional) Initial fill percentage when the animation starts (e.g., `0.25` means 25% revealed at start).
 
 ### Examples
 
@@ -49,6 +50,13 @@ Fill slowly over 80% of scroll:
 ```html
 <p class="text-reveal" data-revealed="#fff" data-unrevealed="#888" data-highlight="#FFD600" data-fill="0.8">
    This text reveal fills up <span>slowly</span>, taking 80% of the scroll window to complete.
+</p>
+```
+
+Start partially filled:
+```html
+<p class="text-reveal" data-revealed="#fff" data-unrevealed="#888" data-highlight="#FFD600" data-fill-start="0.25" data-fill="0.5">
+   At animation start this is already <span>25%</span> filled, and it reaches full fill after <span>50%</span> more scroll progress.
 </p>
 ```
 
